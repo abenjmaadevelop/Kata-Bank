@@ -64,6 +64,11 @@ class AccountOperation {
 		account.withdraw(openingAmount);
 		Assertions.assertThrows(NonSufficientFundsException.class,
 				() -> account.withdraw(openingAmount.add(BigDecimal.TEN)));
-	}		
+	}	
+	
+	@Test
+	public void init_a_transaction_with_a_negative_amount_for_a_withdraw() {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> account.withdraw(BigDecimal.valueOf(-100L)));
+	}
 
 }
