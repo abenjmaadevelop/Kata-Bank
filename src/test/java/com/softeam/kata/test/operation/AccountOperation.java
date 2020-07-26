@@ -51,7 +51,7 @@ class AccountOperation {
 	}
 	
 	@Test
-	public void init_a_transaction_with_a_positive_amount_equals_to_the_balance_for_a_withdraw() {
+	public void init_a_transaction_with_a_positive_amount_equals_to_the_balance_for_a_withdraw() throws NonSufficientFundsException {
 		when(transactions.lastBalance()).thenReturn(BigDecimal.valueOf(100L));
 		account.withdraw(BigDecimal.valueOf(50L));
 		verify(transactions,times(2)).add(any(Transaction.class));

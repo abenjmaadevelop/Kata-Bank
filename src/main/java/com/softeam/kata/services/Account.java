@@ -3,6 +3,7 @@ package com.softeam.kata.services;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.softeam.kata.exception.NonSufficientFundsException;
 import com.softeam.kata.model.InMemoryTransactions;
 import com.softeam.kata.model.Transaction;
 
@@ -28,13 +29,15 @@ public class Account {
 
 	}
 
-	public void withdraw(BigDecimal amount) {
+	public void withdraw(BigDecimal amount) throws NonSufficientFundsException {
 		BigDecimal previousBalance = transactions.lastBalance();
+		if (previousBalance.compareTo(amount) < 0) {
+			throw new NonSufficientFundsException("Insufficient funds");
+		}
 		Transaction transaction = new Transaction(LocalDateTime.now(), amount.multiply(BigDecimal.valueOf(-1L)),
 				previousBalance.subtract(amount));
 		transactions.add(transaction);
 
 	}
-	
 
 }
