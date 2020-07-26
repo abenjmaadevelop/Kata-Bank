@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.softeam.kata.exception.NonSufficientFundsException;
 import com.softeam.kata.model.InMemoryTransactions;
 import com.softeam.kata.model.Transaction;
 import com.softeam.kata.services.Account;
@@ -55,5 +56,14 @@ class AccountOperation {
 		account.withdraw(BigDecimal.valueOf(50L));
 		verify(transactions,times(2)).add(any(Transaction.class));
 	}
+	
+	@Test
+	public void init_a_transaction_with_a_positive_amount_greater_than_the_balance_for_a_withdraw() throws NonSufficientFundsException {
+		BigDecimal openingAmount = BigDecimal.valueOf(100L);
+		when(transactions.lastBalance()).thenReturn(openingAmount );
+		account.withdraw(openingAmount);
+		Assertions.assertThrows(NonSufficientFundsException.class,
+				() -> account.withdraw(openingAmount.add(BigDecimal.TEN)));
+	}		
 
 }
