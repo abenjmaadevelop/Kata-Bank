@@ -35,5 +35,12 @@ public class AccountCreate {
                 IllegalArgumentException.class,
                 () -> new Account(initAmount, transactions));
     }
+	
+	@Test
+	public void create_an_account_with_a_zero_initial_amount() {
+		BigDecimal initAmount = BigDecimal.ZERO;
+		new Account(initAmount, transactions);
+		verify(transactions).add(any(Transaction.class));
+	}
 
 }
