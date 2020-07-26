@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +36,16 @@ class AccountOperation {
 		when(transactions.lastBalance()).thenReturn(BigDecimal.valueOf(50L));
 		account.deposit(BigDecimal.valueOf(100L));
 		verify(transactions, atLeastOnce()).add(any(Transaction.class));
+	}
+	
+	@Test
+	public void init_a_transaction_with_a_negative_amount_for_a_deposit() {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> account.deposit(BigDecimal.valueOf(-100L)));
+	}
+
+	@Test
+	public void init_a_transaction_with_a_null_amount_for_a_deposit() {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> account.deposit(BigDecimal.ZERO));
 	}
 
 }
