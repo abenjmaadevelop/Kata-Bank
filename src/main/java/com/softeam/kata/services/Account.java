@@ -3,6 +3,7 @@ package com.softeam.kata.services;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.softeam.kata.exception.NonSufficientFundsException;
 import com.softeam.kata.model.InMemoryTransactions;
@@ -17,7 +18,7 @@ public class Account {
 			throw new IllegalArgumentException("Cannot create account with negative balance");
 		}
 		this.transactions = transactions;
-		this.transactions.add(new Transaction(Transaction.Type.DEPOSIT,LocalDateTime.now(), initAmount, initAmount));
+		this.transactions.add(new Transaction(Transaction.Type.DEPOSIT, LocalDateTime.now(), initAmount, initAmount));
 	}
 
 	public void deposit(BigDecimal amount) {
@@ -25,7 +26,7 @@ public class Account {
 			throw new IllegalArgumentException("Cannot deposit a negative or null amount");
 		}
 		BigDecimal previousBalance = transactions.lastBalance();
-		transactionRecord(Transaction.Type.DEPOSIT,amount, previousBalance);
+		transactionRecord(Transaction.Type.DEPOSIT, amount, previousBalance);
 
 	}
 
@@ -39,19 +40,21 @@ public class Account {
 		if (previousBalance.compareTo(amount) < 0) {
 			throw new NonSufficientFundsException("Insufficient funds");
 		}
-		transactionRecord(Transaction.Type.WITHDRAW,amount, previousBalance);
+		transactionRecord(Transaction.Type.WITHDRAW, amount, previousBalance);
 
 	}
 
-	private void transactionRecord( Transaction.Type type, BigDecimal amount, BigDecimal previousBalance) {
-		Transaction transaction = new Transaction(type ,LocalDateTime.now(), amount.multiply(BigDecimal.valueOf(-1L)),
+	private void transactionRecord(Transaction.Type type, BigDecimal amount, BigDecimal previousBalance) {
+		Transaction transaction = new Transaction(type, LocalDateTime.now(), amount.multiply(BigDecimal.valueOf(-1L)),
 				previousBalance.subtract(amount));
 		transactions.add(transaction);
 	}
 
 	public static String printHistory(List<Transaction> transactionsList) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder line = new StringBuilder("operation | date       | amount | balance");
+		String tranLines = transactionsList.stream().map(transaction -> new LineFormatter().format(transaction))
+				.collect(Collectors.joining("\n"));
+		return line.append("\n").append(tranLines).toString();
 	}
 
 }

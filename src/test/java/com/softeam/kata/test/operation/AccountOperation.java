@@ -93,7 +93,7 @@ class AccountOperation {
 
 		List<Transaction> transactionsList = Stream.of(transactionOne, transactionTwo).collect(Collectors.toList());
 
-		assertEquals("operation | date       | amount | balance" + "\nDEPOSIT | 09/07/2020 | 100,00 | 100,00"
-				+ "\nWITHDRAW | 10/07/2020 | 50,00 | 150,00", Account.printHistory(transactionsList));
+		assertEquals("operation | date       | amount | balance" + "\nDEPOSIT | 09/07/2020 | 100.00 | 100.00"
+				+ "\nWITHDRAW | 10/07/2020 | 50.00 | 150.00", Account.printHistory(transactionsList));
 	}
 }
