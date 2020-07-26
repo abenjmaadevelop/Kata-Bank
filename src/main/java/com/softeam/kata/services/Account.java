@@ -31,6 +31,11 @@ public class Account {
 
 	public void withdraw(BigDecimal amount) throws NonSufficientFundsException {
 		BigDecimal previousBalance = transactions.lastBalance();
+
+		if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+			throw new IllegalArgumentException("Cannot withdraw a negative or null amount");
+		}
+
 		if (previousBalance.compareTo(amount) < 0) {
 			throw new NonSufficientFundsException("Insufficient funds");
 		}
