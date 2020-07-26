@@ -2,6 +2,7 @@ package com.softeam.kata.services;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.softeam.kata.exception.NonSufficientFundsException;
 import com.softeam.kata.model.InMemoryTransactions;
@@ -46,6 +47,11 @@ public class Account {
 		Transaction transaction = new Transaction(type ,LocalDateTime.now(), amount.multiply(BigDecimal.valueOf(-1L)),
 				previousBalance.subtract(amount));
 		transactions.add(transaction);
+	}
+
+	public static String printHistory(List<Transaction> transactionsList) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
