@@ -28,4 +28,9 @@ public class Account {
 
 	}
 
+	public void withdraw(BigDecimal amount) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

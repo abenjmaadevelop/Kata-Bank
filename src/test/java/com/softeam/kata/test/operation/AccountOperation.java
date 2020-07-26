@@ -2,6 +2,7 @@ package com.softeam.kata.test.operation;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,6 +47,13 @@ class AccountOperation {
 	@Test
 	public void init_a_transaction_with_a_null_amount_for_a_deposit() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> account.deposit(BigDecimal.ZERO));
+	}
+	
+	@Test
+	public void init_a_transaction_with_a_positive_amount_equals_to_the_balance_for_a_withdraw() {
+		when(transactions.lastBalance()).thenReturn(BigDecimal.valueOf(100L));
+		account.withdraw(BigDecimal.valueOf(50L));
+		verify(transactions,times(2)).add(any(Transaction.class));
 	}
 
 }
