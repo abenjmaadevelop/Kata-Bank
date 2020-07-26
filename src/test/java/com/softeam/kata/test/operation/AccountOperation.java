@@ -26,7 +26,7 @@ class AccountOperation {
 	private InMemoryTransactions transactions;
 	
 	@BeforeEach
-	 void init(@Mock InMemoryTransactions transactions) {
+	 void init() {
 		account = new Account(BigDecimal.valueOf(100L), transactions);
 	}
 

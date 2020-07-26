@@ -19,7 +19,10 @@ public class Account {
 	}
 
 	public void deposit(BigDecimal amount) {
-		// TODO Auto-generated method stub
+		BigDecimal previousBalance = transactions.lastBalance();
+        Transaction transaction = new Transaction(
+                LocalDateTime.now(), amount, previousBalance.add(amount) );
+        transactions.add(transaction);
 		
 	}
 
