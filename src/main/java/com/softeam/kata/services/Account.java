@@ -19,11 +19,13 @@ public class Account {
 	}
 
 	public void deposit(BigDecimal amount) {
+		if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+			throw new IllegalArgumentException("Cannot deposit a negative or null amount");
+		}
 		BigDecimal previousBalance = transactions.lastBalance();
-        Transaction transaction = new Transaction(
-                LocalDateTime.now(), amount, previousBalance.add(amount) );
-        transactions.add(transaction);
-		
+		Transaction transaction = new Transaction(LocalDateTime.now(), amount, previousBalance.add(amount));
+		transactions.add(transaction);
+
 	}
 
 }
