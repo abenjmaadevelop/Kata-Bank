@@ -33,4 +33,8 @@ public class Transaction {
 	public BigDecimal getBalance() {
 		return balance;
 	}
+
+	public Type getType() {
+		return type;
+	}
 }
