@@ -29,8 +29,11 @@ public class Account {
 	}
 
 	public void withdraw(BigDecimal amount) {
-		// TODO Auto-generated method stub
-		
+		BigDecimal previousBalance = transactions.lastBalance();
+		Transaction transaction = new Transaction(LocalDateTime.now(), amount.multiply(BigDecimal.valueOf(-1L)),
+				previousBalance.subtract(amount));
+		transactions.add(transaction);
+
 	}
 
 }
